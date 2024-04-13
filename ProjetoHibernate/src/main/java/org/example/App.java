@@ -17,20 +17,41 @@ import java.util.List;
 
 public class App {
     public static void main( String[] args ) throws Exception{
-        teste2();
+        criarAluno();
+        AlunoDAO alunoDAO = new AlunoDAO();
+        Aluno aluno = alunoDAO.obterPorId(2);
+
+        System.out.println(aluno.getNome());
+        System.out.println(aluno.getCpf());
+        System.out.println(aluno.getNumeroMatricula());
+
+        List<Turma> turmas = aluno.getTurmas();
+
+
+        turmas.forEach(turma -> {
+            System.out.println("-----------------");
+            System.out.println(turma.getSemestre());
+            System.out.println(turma.getProfessor().getNome());
+        });
     }
 
     public static void criarAluno() throws Exception {
+        TurmaDAO turmaDao = new TurmaDAO();
+        Turma turma = turmaDao.obterPorId(2);
+
         AlunoDAO alunoDAO = new AlunoDAO();
-        Aluno aluno = new Aluno();
+        //Aluno aluno = new Aluno();
+        Aluno aluno = alunoDAO.obterPorId(2);
 
-        aluno.setNome("Maria");
-        aluno.setCpf("024871289");
-        aluno.setNumeroMatricula("00154");
-        aluno.setEndereco("Rua Guajajara");
-        aluno.setNascimento(LocalDate.of(1999, 9, 15));
-
-        alunoDAO.insere(aluno);
+//        aluno.setNome("Jilson");
+//        aluno.setCpf("01571224");
+//        aluno.setNumeroMatricula("00189");
+//        aluno.setEndereco("Rua Manilda");
+//        aluno.setNascimento(LocalDate.of(2001, 10, 4));
+//
+//
+//        alunoDAO.insere(aluno);
+        aluno.addTurma(turma);
     }
 
     public static void operacoesAluno() throws Exception {
@@ -71,6 +92,7 @@ public class App {
     }
 
     public static void teste2() throws Exception {
+        //criarTurma();
         TurmaDAO turmaDAO = new TurmaDAO();
         List<Turma> turmas = turmaDAO.obterPorSemestre("1/2024");
 

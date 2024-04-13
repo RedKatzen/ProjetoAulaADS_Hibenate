@@ -28,7 +28,10 @@ public class Aluno {
 
     @Column(name = "nascimento")
     private LocalDate nascimento;
-    @ManyToMany(cascade = CascadeType.ALL)
+                                    // Eager: carregará todos os dados vinculados ao aluno (objeto)
+                                    // Pode executar a aplicação com lerdeza
+                                    // Lazy: carregará apenas o objeto
+    @ManyToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JoinTable(name = "aluno_turma", joinColumns = @JoinColumn(name="aluno_id"),
                                     inverseJoinColumns = @JoinColumn(name="turma_id"))
     private List<Turma> turmas;
@@ -108,7 +111,7 @@ public class Aluno {
             this.turmas = new ArrayList<>();
         }
         this.turmas.add(turma);
-        turma.addAluno(this);
+        //turma.addAluno(this);
     }
 //    public void setTurmas(List<Turma> turmas) {
 //        this.turmas = turmas;
